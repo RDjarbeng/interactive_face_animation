@@ -128,6 +128,8 @@ By using a playful, cartoonish design, the project avoids the uncanny valley, en
 The project also draws on affective interaction, with emotions like happiness or surprise designed to evoke emotional responses from the user. Through social presence, the character feels like a social entity, enhancing the sense of interaction. Finally, proxemics plays a role, as the character’s emotions intensify based on the mouse’s virtual proximity, creating a dynamic and engaging experience.
 
 
+I suppose my biggest inspiration for this is the keepon robot which is a minimalistic robot that creates an affective interaction with it's body movements. So this can be my attempt at a virtual keepon.
+
 
 
 ---
