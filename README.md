@@ -19,6 +19,8 @@ A playful and interactive face component built with **React** that tracks mouse 
 * 😴 Shows **boredom** after long inactivity.
 * 💗 Dynamic facial animations and transitions using CSS + JavaScript.
 
+![face_animation2](https://github.com/user-attachments/assets/e7b31e82-cd10-418e-9366-5435549653b5)
+
 ---
 
 ## 📦 Technologies Used
