@@ -37,14 +37,16 @@ const FaceFollowingMouse: React.FC = () => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       const now = Date.now();
-      
+      //react to mouse return
       if (now - lastActive > 2000 && !isActive) {
         setEmotion('surprised');
         if (emotionTimer.current) {
+          console.log('Emotion reset');
+          
           clearTimeout(emotionTimer.current);
         }
         emotionTimer.current = setTimeout(() => {
-          setEmotion('neutral');
+          // setEmotion('neutral');
           resetBoredTimer();
         }, 2000);
       }
@@ -108,15 +110,19 @@ const FaceFollowingMouse: React.FC = () => {
       setHappinessLevel(prev => {
         return prev + (proximityFactor - prev) * 0.1;
       });
+      setEmotionBasedOnHappiness();
       
-      if (happinessLevel > 0.6) {
+    }, 30);
+
+    const setEmotionBasedOnHappiness = ()=>{
+      if (happinessLevel > 0.3) {
         if (emotion !== 'happy') {
           setEmotion('happy');
         }
       } else if (emotion === 'happy' && happinessLevel < 0.3) {
         setEmotion('neutral');
       }
-    }, 30);
+    }
     
     startIdleAnimation();
     
@@ -381,8 +387,16 @@ const FaceFollowingMouse: React.FC = () => {
   
   const getBackgroundStyle = () => {
     if (emotion === 'happy') {
-      const intensity = Math.max(500, 800 - Math.floor(happinessLevel * 300));
-      return `bg-gradient-to-b from-yellow-${intensity} to-orange-${Math.min(900, intensity + 100)}`;
+       // Map happinessLevel to predefined intensity ranges
+    if (happinessLevel >= 0.8) {
+      return 'bg-gradient-to-b from-yellow-500 to-orange-600';
+    } else if (happinessLevel >= 0.6) {
+      return 'bg-gradient-to-b from-yellow-600 to-orange-700';
+    } else if (happinessLevel >= 0.4) {
+      return 'bg-gradient-to-b from-yellow-700 to-orange-700';
+    } else {
+      return 'bg-gradient-to-b from-yellow-800 to-orange-900';
+    }
     } else if (emotion === 'bored') {
       return boredState === 0 
         ? "bg-gradient-to-b from-gray-700 to-blue-900" 
