@@ -1,6 +1,6 @@
 # Interactive face animation Tracker
 
-![Application screenshot on stackblitz](image.png)
+![Application screenshot on stackblitz](screenshot_face_anim.png)
 
 
 
