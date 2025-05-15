@@ -129,6 +129,8 @@ The project also draws on affective interaction, with emotions like happiness or
 
 
 I suppose my biggest inspiration for this is the keepon robot which is a minimalistic robot that creates an affective interaction with it's body movements. So this can be my attempt at a virtual keepon.
+![image](https://github.com/user-attachments/assets/d06c6aaf-ad28-448d-9438-6ff42bc679a2)
+
 
 
 
