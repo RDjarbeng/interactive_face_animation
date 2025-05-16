@@ -11,6 +11,16 @@ function App() {
       <p className="mt-6 text-sm text-gray-500">
         © {new Date().getFullYear()} Interactive Face Demo - Created with React
       </p>
+      <div className="text-sm text-gray-500 mb-4">
+      <a
+        href="https://github.com/RDjarbeng/interactive_face_animation"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 hover:underline"
+      >
+        View source on GitHub
+      </a>
+    </div>
     </div>
   );
 }
