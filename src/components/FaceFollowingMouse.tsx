@@ -492,13 +492,14 @@ const FaceFollowingMouse: React.FC = () => {
       <div className="w-full max-w-3xl mx-auto mt-8 mb-12 px-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">💡 Inspiration</h2>
         <p className="text-gray-600 mb-4">
-          This project is inspired by a Human-Robot Interaction (HRI) course I took at Carnegie Mellon University. The character’s boredom state after inactivity creates a feedback loop: the user’s actions (moving the mouse) influence the character’s emotions (e.g., shifting to happiness), which in turn encourage further user interaction.
+          This project is inspired by a Human-Robot Interaction (HRI) course I took at Carnegie Mellon University. 
         </p>
         <p className="text-gray-600 mb-4">
-        <span className="font-bold">Agency</span> is conveyed through the character’s ability to independently switch emotions (e.g., from neutral to happy when the mouse approaches), giving the impression that it autonomously ‘chooses’ to react to the user’s presence. However, after playing with the application, it becomes clear that the look of surprise is a preprogrammed response—an algorithm moving pixels through different states, not a conscious choice.
+        Here are some of the HRI compoonents I think this design incorporates: The character’s boredom state after inactivity creates a feedback loop: the user’s actions (moving the mouse) influence the character’s emotions (e.g., shifting to happiness), which in turn encourage further user interaction. 
+        <span className="font-bold"> Agency</span> is conveyed through the character’s ability to independently switch emotions (e.g., from neutral to happy when the mouse approaches), giving the impression that it autonomously ‘chooses’ to react to the user’s presence. However, after playing with the application for some time, it becomes clear that the look of surprise is a preprogrammed response—an algorithm moving pixels through different states, not a conscious choice.
         </p>
         <p className="text-gray-600 mb-4">
-          By using a playful, cartoonish design, the project avoids the <span className="font-bold">uncanny valley</span>, ensuring the character feels approachable rather than eerily human-like. 
+          By using a playful, cartoonish design, the project hopes to avoid the <span className="font-bold">uncanny valley</span>, ensuring the character feels approachable rather than eerily human-like. 
           The project draws on <span className="font-bold">affective interaction</span>, with emotions like happiness or surprise designed to evoke emotional responses from the user. 
           Through <span className="font-bold">social presence</span>, the character feels like a social entity, enhancing the sense of interaction. 
           <span className="font-bold">Proxemics</span> plays a role, as the character’s emotions intensify based on the mouse’s virtual proximity, creating a dynamic and engaging experience.
