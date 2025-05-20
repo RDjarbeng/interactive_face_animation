@@ -409,41 +409,43 @@ const FaceFollowingMouse: React.FC = () => {
   };
   
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center w-full min-h-screen ">
       <div className="mb-4 text-lg font-semibold text-gray-800">Interactive Face Animation</div>
       <div className="mb-2 text-sm text-gray-600">
         Current emotion: <span className="font-medium">{emotion}</span> | 
         Happiness: <span className="font-medium">{Math.round(happinessLevel * 100)}%</span>
         {emotion === 'bored' && <span> | Bored state: {boredState + 1}</span>}
       </div>
-      <div className="text-sm text-gray-500 mb-4 italic">Move your mouse around to interact, or leave it still for 5 seconds to see the bored states</div>
+      <div className="text-sm text-gray-500 mb-2 italic">
+        Move your mouse around to interact, or leave it still for 10 seconds to see the bored states
+      </div>
       
-      <div 
-        ref={containerRef} 
+  
+      <div
+        ref={containerRef}
         className={`flex items-center justify-center w-full max-w-3xl mx-auto h-96 rounded-lg transition-all duration-700 ${getBackgroundStyle()}`}
       >
-        <div 
+        <div
           className="relative w-64 h-64 bg-gradient-to-b from-yellow-200 to-yellow-300 rounded-full flex flex-col items-center justify-center shadow-[0_10px_50px_rgba(0,0,0,0.3)] transition-all duration-300"
           style={getFaceContainerStyle()}
         >
           <div className="flex space-x-8 items-center mt-4">
-            <div 
+            <div
               className="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-gray-300 transition-all duration-500"
               style={calculateEyeStyle(0.35, 0.4).eyeball}
             >
-              <div 
+              <div
                 className="relative w-3/4 h-3/4 bg-black rounded-full flex items-center justify-center transition-all duration-100"
                 style={calculateEyeStyle(0.35, 0.4).pupil}
               >
                 <div className="w-1/3 h-1/3 bg-white rounded-full absolute top-1/4 left-1/4 opacity-70"></div>
               </div>
             </div>
-            
-            <div 
+            <div
               className="w-16 h-16 bg-white rounded-full flex items-center justify-center overflow-hidden shadow-lg border-2 border-gray-300 transition-all duration-500"
               style={calculateEyeStyle(0.65, 0.4).eyeball}
             >
-              <div 
+              <div
                 className="relative w-3/4 h-3/4 bg-black rounded-full flex items-center justify-center transition-all duration-100"
                 style={calculateEyeStyle(0.65, 0.4).pupil}
               >
@@ -451,29 +453,65 @@ const FaceFollowingMouse: React.FC = () => {
               </div>
             </div>
           </div>
-          
-          <div 
+          <div
             className="mt-4 shadow-md transition-all duration-300"
             style={getNoseStyle()}
           ></div>
-          
-          <div 
+          <div
             className="mt-6 transition-all duration-300"
             style={getMouthStyle()}
           ></div>
-          
           {happinessLevel > 0.2 && (
             <>
-              <div 
-                className="absolute bg-red-300 rounded-full transition-all duration-300" 
+              <div
+                className="absolute bg-red-300 rounded-full transition-all duration-300"
                 style={getBlushStyle('left')}
               ></div>
-              <div 
+              <div
                 className="absolute bg-red-300 rounded-full transition-all duration-300"
                 style={getBlushStyle('right')}
               ></div>
             </>
           )}
+        </div>
+      </div>
+  
+      {/* How It Works Section */}
+      <div className="w-full max-w-3xl mx-auto mt-12 px-4 bg-gray-100">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">🧠 How It Works</h2>
+        <ul className="list-disc list-inside text-gray-600 space-y-2">
+          <li>Mouse movement is tracked via <code>window.addEventListener('mousemove')</code>.</li>
+          <li>A central reference point on the face is used to calculate proximity.</li>
+          <li><strong>Happiness</strong> increases with proximity and changes facial features (mouth curve, blush, nose bounce).</li>
+          <li>Inactivity timers switch emotion to <strong>bored</strong> or <strong>surprised</strong>.</li>
+          <li>Dynamic styling updates the pupil size, eye movement, mouth shape, blush opacity, and more.</li>
+        </ul>
+      </div>
+  
+      {/* Inspiration Section */}
+      <div className="w-full max-w-3xl mx-auto mt-8 mb-12 px-4">
+        <h2 className="text-2xl font-bold text-gray-800 mb-4">💡 Inspiration</h2>
+        <p className="text-gray-600 mb-4">
+          This project is inspired by a Human-Robot Interaction (HRI) course I took at Carnegie Mellon University. The character’s boredom state after inactivity creates a feedback loop: the user’s actions (moving the mouse) influence the character’s emotions (e.g., shifting to happiness), which in turn encourage further user interaction.
+        </p>
+        <p className="text-gray-600 mb-4">
+        <span className="font-bold">Agency</span> is conveyed through the character’s ability to independently switch emotions (e.g., from neutral to happy when the mouse approaches), giving the impression that it autonomously ‘chooses’ to react to the user’s presence. However, after playing with the application, it becomes clear that the look of surprise is a preprogrammed response—an algorithm moving pixels through different states, not a conscious choice.
+        </p>
+        <p className="text-gray-600 mb-4">
+          By using a playful, cartoonish design, the project avoids the <span className="font-bold">uncanny valley</span>, ensuring the character feels approachable rather than eerily human-like. 
+          The project draws on <span className="font-bold">affective interaction</span>, with emotions like happiness or surprise designed to evoke emotional responses from the user. 
+          Through <span className="font-bold">social presence</span>, the character feels like a social entity, enhancing the sense of interaction. 
+          <span className="font-bold">Proxemics</span> plays a role, as the character’s emotions intensify based on the mouse’s virtual proximity, creating a dynamic and engaging experience.
+        </p>
+        <p className="text-gray-600">
+          My biggest inspiration is the Keepon robot, a minimalistic robot that creates affective interaction with its body movements. This project is my attempt at a virtual Keepon.
+        </p>
+        <div className="mt-4">
+          <img
+            src="https://github.com/user-attachments/assets/d06c6aaf-ad28-448d-9438-6ff42bc679a2"
+            alt="Keepon Robot"
+            className="max-w-full h-auto rounded-lg shadow-md"
+          />
         </div>
       </div>
     </div>
