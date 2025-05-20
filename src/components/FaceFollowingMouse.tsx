@@ -502,7 +502,17 @@ const FaceFollowingMouse: React.FC = () => {
         <div className="text-gray-600 mb-4">
           This project is inspired by a Human-Robot Interaction (HRI) course I took at Carnegie Mellon University. 
           <p className="text-gray-600">
-          My biggest inspiration is the Keepon robot, a minimalistic robot that creates affective interaction with its body movements. 
+          One notable character is the Keepon robot, a minimalistic robot that creates affective interaction with its body movements whose 
+          'minimal design ... is meant to intuitively and comfortably convey the robot’s expressions of attention and emotion'
+          Find the paper here- 
+
+          <a
+        href="https://link.springer.com/article/10.1007/s12369-008-0009-8 "
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 hover:underline"
+      >Keepon A Playful Robot for Research, Therapy, and Entertainment
+      </a>
         </p>
         <div className="mt-4">
           <img
