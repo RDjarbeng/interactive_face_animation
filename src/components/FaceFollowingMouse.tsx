@@ -481,19 +481,37 @@ const FaceFollowingMouse: React.FC = () => {
         <h2 className="text-2xl font-bold text-gray-800 mb-4">🧠 How It Works</h2>
         <ul className="list-disc list-inside text-gray-600 space-y-2">
           <li>Mouse movement is tracked via <code>window.addEventListener('mousemove')</code>.</li>
-          <li>A central reference point on the face is used to calculate proximity.</li>
+          <li>A central reference point on the face is used to calculate proximity which gives a happiness score as a.</li>
           <li><strong>Happiness</strong> increases with proximity and changes facial features (mouth curve, blush, nose bounce).</li>
           <li>Inactivity timers switch emotion to <strong>bored</strong> or <strong>surprised</strong>.</li>
           <li>Dynamic styling updates the pupil size, eye movement, mouth shape, blush opacity, and more.</li>
+          <li>See the <a
+        href="https://github.com/RDjarbeng/interactive_face_animation"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 hover:underline"
+      >
+         GitHub repository</a> for full details 
+         </li>
         </ul>
       </div>
   
       {/* Inspiration Section */}
       <div className="w-full max-w-3xl mx-auto mt-8 mb-12 px-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">💡 Inspiration</h2>
-        <p className="text-gray-600 mb-4">
+        <div className="text-gray-600 mb-4">
           This project is inspired by a Human-Robot Interaction (HRI) course I took at Carnegie Mellon University. 
+          <p className="text-gray-600">
+          My biggest inspiration is the Keepon robot, a minimalistic robot that creates affective interaction with its body movements. 
         </p>
+        <div className="mt-4">
+          <img
+            src="https://github.com/user-attachments/assets/d06c6aaf-ad28-448d-9438-6ff42bc679a2"
+            alt="Keepon Robot"
+            className="max-w-full h-auto rounded-lg shadow-md"
+          />
+        </div>
+        </div>
         <p className="text-gray-600 mb-4">
         Here are some of the HRI compoonents I think this design incorporates: The character’s boredom state after inactivity creates a feedback loop: the user’s actions (moving the mouse) influence the character’s emotions (e.g., shifting to happiness), which in turn encourage further user interaction. 
         <span className="font-bold"> Agency</span> is conveyed through the character’s ability to independently switch emotions (e.g., from neutral to happy when the mouse approaches), giving the impression that it autonomously ‘chooses’ to react to the user’s presence. However, after playing with the application for some time, it becomes clear that the look of surprise is a preprogrammed response—an algorithm moving pixels through different states, not a conscious choice.
@@ -504,16 +522,7 @@ const FaceFollowingMouse: React.FC = () => {
           Through <span className="font-bold">social presence</span>, the character feels like a social entity, enhancing the sense of interaction. 
           <span className="font-bold">Proxemics</span> plays a role, as the character’s emotions intensify based on the mouse’s virtual proximity, creating a dynamic and engaging experience.
         </p>
-        <p className="text-gray-600">
-          My biggest inspiration is the Keepon robot, a minimalistic robot that creates affective interaction with its body movements. This project is my attempt at a virtual Keepon.
-        </p>
-        <div className="mt-4">
-          <img
-            src="https://github.com/user-attachments/assets/d06c6aaf-ad28-448d-9438-6ff42bc679a2"
-            alt="Keepon Robot"
-            className="max-w-full h-auto rounded-lg shadow-md"
-          />
-        </div>
+        
       </div>
     </div>
   );
