@@ -6,7 +6,7 @@
 
 A playful and interactive face component built with **React** that tracks mouse movement and displays various emotions—**happy**, **surprised**, **bored**, and **neutral**—based on proximity and user interaction.
 
-![Face Emotion Tracker Demo](demo.gif) <!-- You can replace or remove this line if no demo gif -->
+![Face Emot![face_animation2](https://github.com/user-attachments/assets/2cdb71de-064a-445b-be6b-26e406cabc25)
 
 ---
 
@@ -18,7 +18,8 @@ A playful and interactive face component built with **React** that tracks mouse 
 * 😐 Returns to **neutral** if interaction reduces.
 * 😴 Shows **boredom** after long inactivity.
 * 💗 Dynamic facial animations and transitions using CSS + JavaScript.
-
+  
+![face_animation](https://github.com/user-attachments/assets/b24edfba-e145-476e-af56-ddc99fd93f1e)
 ![face_animation2](https://github.com/user-attachments/assets/e7b31e82-cd10-418e-9366-5435549653b5)
 
 ---
