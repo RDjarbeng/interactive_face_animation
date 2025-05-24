@@ -422,7 +422,7 @@ const FaceFollowingMouse: React.FC = () => {
         {emotion === 'bored' && <span> | Bored state: {boredState + 1}</span>}
       </div>
       <div className="text-sm text-gray-500 mb-2 italic">
-        Move your mouse around to interact, or leave it still for 10 seconds to see the bored states
+        Move your mouse around to interact, or leave it still for 5 seconds to see the bored states
       </div>
       
       <div
