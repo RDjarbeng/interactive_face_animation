@@ -175,7 +175,7 @@ const FaceFollowingMouse: React.FC = () => {
   };
   
   const calculateEyeStyle = (eyeX: number, eyeY: number) => {
-    if (!containerRef.current || dimensions.width === 0) return { eyeball: {}, pupil: {} };
+    if (!containerRef.current || dimensions.width === 0) return { eyeball: {}, pupil: {}, reflection: {} };
 
     const rect = containerRef.current.getBoundingClientRect();
     const faceWidth = 256; // Width of the face container (w-64 = 16rem = 256px)
@@ -194,6 +194,10 @@ const FaceFollowingMouse: React.FC = () => {
     const maxPupilTravel = 10;
     const pupilX = Math.cos(angle) * Math.min(distance / 15, maxPupilTravel);
     const pupilY = Math.sin(angle) * Math.min(distance / 15, maxPupilTravel);
+    
+    // Calculate reflection position (opposite to pupil movement)
+    const reflectionX = -pupilX * 0.3;
+    const reflectionY = -pupilY * 0.3;
     
     // Adjust eyeball movement range
     const maxEyeballTravel = 3;
@@ -235,6 +239,9 @@ const FaceFollowingMouse: React.FC = () => {
         transform: `translate(${pupilX}px, ${pupilY}px)`,
         width: `${pupilSizeMultiplier * 100}%`,
         height: `${pupilSizeMultiplier * 100}%`
+      },
+      reflection: {
+        transform: `translate(${reflectionX}px, ${reflectionY}px)`
       }
     };
   };
@@ -435,7 +442,10 @@ const FaceFollowingMouse: React.FC = () => {
                 className="relative w-3/4 h-3/4 bg-black rounded-full flex items-center justify-center transition-all duration-100"
                 style={calculateEyeStyle(0.35, 0.4).pupil}
               >
-                <div className="w-1/3 h-1/3 bg-white rounded-full absolute top-1/4 left-1/4 opacity-70"></div>
+                <div 
+                  className="w-1/3 h-1/3 bg-white rounded-full absolute top-1/4 left-1/4 opacity-70 transition-transform duration-100"
+                  style={calculateEyeStyle(0.35, 0.4).reflection}
+                ></div>
               </div>
             </div>
             <div
@@ -446,7 +456,10 @@ const FaceFollowingMouse: React.FC = () => {
                 className="relative w-3/4 h-3/4 bg-black rounded-full flex items-center justify-center transition-all duration-100"
                 style={calculateEyeStyle(0.65, 0.4).pupil}
               >
-                <div className="w-1/3 h-1/3 bg-white rounded-full absolute top-1/4 left-1/4 opacity-70"></div>
+                <div 
+                  className="w-1/3 h-1/3 bg-white rounded-full absolute top-1/4 left-1/4 opacity-70 transition-transform duration-100"
+                  style={calculateEyeStyle(0.65, 0.4).reflection}
+                ></div>
               </div>
             </div>
           </div>
