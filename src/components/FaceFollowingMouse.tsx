@@ -37,16 +37,12 @@ const FaceFollowingMouse: React.FC = () => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       const now = Date.now();
-      //react to mouse return
       if (now - lastActive > 2000 && !isActive) {
         setEmotion('surprised');
         if (emotionTimer.current) {
-          console.log('Emotion reset');
-          
           clearTimeout(emotionTimer.current);
         }
         emotionTimer.current = setTimeout(() => {
-          // setEmotion('neutral');
           resetBoredTimer();
         }, 2000);
       }
@@ -114,7 +110,7 @@ const FaceFollowingMouse: React.FC = () => {
       
     }, 30);
 
-    const setEmotionBasedOnHappiness = ()=>{
+    const setEmotionBasedOnHappiness = () => {
       if (happinessLevel > 0.3) {
         if (emotion !== 'happy') {
           setEmotion('happy');
@@ -179,33 +175,36 @@ const FaceFollowingMouse: React.FC = () => {
   };
   
   const calculateEyeStyle = (eyeX: number, eyeY: number) => {
-    if (dimensions.width === 0) return { eyeball: {}, pupil: {} };
+    if (!containerRef.current || dimensions.width === 0) return { eyeball: {}, pupil: {} };
+
+    const rect = containerRef.current.getBoundingClientRect();
+    const faceWidth = 256; // Width of the face container (w-64 = 16rem = 256px)
+    const faceHeight = 256; // Height of the face container
     
-    const eyeCenterX = dimensions.width * eyeX;
-    const eyeCenterY = dimensions.height * eyeY;
-    
-    const absoluteEyeX = containerRef.current?.getBoundingClientRect().left ?? 0 + eyeCenterX;
-    const absoluteEyeY = containerRef.current?.getBoundingClientRect().top ?? 0 + eyeCenterY;
+    // Calculate absolute position of the eye center
+    const absoluteEyeX = rect.left + (rect.width - faceWidth) / 2 + faceWidth * eyeX;
+    const absoluteEyeY = rect.top + (rect.height - faceHeight) / 2 + faceHeight * eyeY;
     
     const dx = mousePosition.x - absoluteEyeX;
     const dy = mousePosition.y - absoluteEyeY;
+    const angle = Math.atan2(dy, dx);
     const distance = Math.sqrt(dx * dx + dy * dy);
     
-    const angle = Math.atan2(dy, dx);
+    // Adjust pupil movement range
+    const maxPupilTravel = 10;
+    const pupilX = Math.cos(angle) * Math.min(distance / 15, maxPupilTravel);
+    const pupilY = Math.sin(angle) * Math.min(distance / 15, maxPupilTravel);
     
-    const maxPupilTravel = 15;
-    const pupilX = Math.cos(angle) * Math.min(distance / 10, maxPupilTravel);
-    const pupilY = Math.sin(angle) * Math.min(distance / 10, maxPupilTravel);
+    // Adjust eyeball movement range
+    const maxEyeballTravel = 3;
+    const eyeballX = Math.cos(angle) * Math.min(distance / 25, maxEyeballTravel);
+    const eyeballY = Math.sin(angle) * Math.min(distance / 25, maxEyeballTravel);
     
-    const maxEyeballTravel = 5;
-    const eyeballX = Math.cos(angle) * Math.min(distance / 20, maxEyeballTravel);
-    const eyeballY = Math.sin(angle) * Math.min(distance / 20, maxEyeballTravel);
-    
-    const maxDistance = Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight);
-    const normalizedDistance = distance / maxDistance;
-    
-    const minPupilSize = 0.4;
-    const maxPupilSize = 0.7;
+    // Calculate pupil size based on distance
+    const maxDistance = Math.max(window.innerWidth, window.innerHeight);
+    const normalizedDistance = Math.min(distance / maxDistance, 1);
+    const minPupilSize = 0.5;
+    const maxPupilSize = 0.8;
     const pupilSizeMultiplier = maxPupilSize - (normalizedDistance * (maxPupilSize - minPupilSize));
     
     let extraStyles = {};
@@ -387,16 +386,15 @@ const FaceFollowingMouse: React.FC = () => {
   
   const getBackgroundStyle = () => {
     if (emotion === 'happy') {
-       // Map happinessLevel to predefined intensity ranges
-    if (happinessLevel >= 0.8) {
-      return 'bg-gradient-to-b from-yellow-500 to-orange-600';
-    } else if (happinessLevel >= 0.6) {
-      return 'bg-gradient-to-b from-yellow-600 to-orange-700';
-    } else if (happinessLevel >= 0.4) {
-      return 'bg-gradient-to-b from-yellow-700 to-orange-700';
-    } else {
-      return 'bg-gradient-to-b from-yellow-800 to-orange-900';
-    }
+      if (happinessLevel >= 0.8) {
+        return 'bg-gradient-to-b from-yellow-500 to-orange-600';
+      } else if (happinessLevel >= 0.6) {
+        return 'bg-gradient-to-b from-yellow-600 to-orange-700';
+      } else if (happinessLevel >= 0.4) {
+        return 'bg-gradient-to-b from-yellow-700 to-orange-700';
+      } else {
+        return 'bg-gradient-to-b from-yellow-800 to-orange-900';
+      }
     } else if (emotion === 'bored') {
       return boredState === 0 
         ? "bg-gradient-to-b from-gray-700 to-blue-900" 
@@ -420,7 +418,6 @@ const FaceFollowingMouse: React.FC = () => {
         Move your mouse around to interact, or leave it still for 10 seconds to see the bored states
       </div>
       
-  
       <div
         ref={containerRef}
         className={`flex items-center justify-center w-full max-w-3xl mx-auto h-96 rounded-lg transition-all duration-700 ${getBackgroundStyle()}`}
@@ -476,7 +473,6 @@ const FaceFollowingMouse: React.FC = () => {
         </div>
       </div>
   
-      {/* How It Works Section */}
       <div className="w-full max-w-3xl mx-auto mt-12 px-4 bg-gray-100">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">🧠 How It Works</h2>
         <ul className="list-disc list-inside text-gray-600 space-y-2">
@@ -496,14 +492,13 @@ const FaceFollowingMouse: React.FC = () => {
         </ul>
       </div>
   
-      {/* Inspiration Section */}
       <div className="w-full max-w-3xl mx-auto mt-8 mb-12 px-4">
         <h2 className="text-2xl font-bold text-gray-800 mb-4">💡 Inspiration</h2>
         <div className="text-gray-600 mb-4">
           This project is inspired by a Human-Robot Interaction (HRI) course I took at Carnegie Mellon University. 
           <p className="text-gray-600">
           One notable character is the Keepon robot, a minimalistic robot that creates affective interaction with its body movements whose 
-          'minimal design ... is meant to intuitively and comfortably convey the robot’s expressions of attention and emotion'
+          'minimal design ... is meant to intuitively and comfortably convey the robot's expressions of attention and emotion'
           Find the paper here- 
 
           <a
@@ -523,16 +518,15 @@ const FaceFollowingMouse: React.FC = () => {
         </div>
         </div>
         <p className="text-gray-600 mb-4">
-        Here are some of the HRI compoonents I think this design incorporates: The character’s boredom state after inactivity creates a feedback loop: the user’s actions (moving the mouse) influence the character’s emotions (e.g., shifting to happiness), which in turn encourage further user interaction. 
-        <span className="font-bold"> Agency</span> is conveyed through the character’s ability to independently switch emotions (e.g., from neutral to happy when the mouse approaches), giving the impression that it autonomously ‘chooses’ to react to the user’s presence. However, after playing with the application for some time, it becomes clear that the look of surprise is a preprogrammed response—an algorithm moving pixels through different states, not a conscious choice.
+        Here are some of the HRI compoonents I think this design incorporates: The character's boredom state after inactivity creates a feedback loop: the user's actions (moving the mouse) influence the character's emotions (e.g., shifting to happiness), which in turn encourage further user interaction. 
+        <span className="font-bold"> Agency</span> is conveyed through the character's ability to independently switch emotions (e.g., from neutral to happy when the mouse approaches), giving the impression that it autonomously 'chooses' to react to the user's presence. However, after playing with the application for some time, it becomes clear that the look of surprise is a preprogrammed response—an algorithm moving pixels through different states, not a conscious choice.
         </p>
         <p className="text-gray-600 mb-4">
           By using a playful, cartoonish design, the project hopes to avoid the <span className="font-bold">uncanny valley</span>, ensuring the character feels approachable rather than eerily human-like. 
           The project draws on <span className="font-bold">affective interaction</span>, with emotions like happiness or surprise designed to evoke emotional responses from the user. 
           Through <span className="font-bold">social presence</span>, the character feels like a social entity, enhancing the sense of interaction. 
-          <span className="font-bold">Proxemics</span> plays a role, as the character’s emotions intensify based on the mouse’s virtual proximity, creating a dynamic and engaging experience.
+          <span className="font-bold">Proxemics</span> plays a role, as the character's emotions intensify based on the mouse's virtual proximity, creating a dynamic and engaging experience.
         </p>
-        
       </div>
     </div>
   );
